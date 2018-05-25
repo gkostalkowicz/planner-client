@@ -1,0 +1,22 @@
+.add-event-form {
+    position: absolute;
+    top: 0;
+    left: 500px;
+}
+
+.add-event-form textarea {
+    width: 350px;
+    height: 100px;
+    font: inherit;
+}
+
+.add-event-form input[type=submit] {
+    margin-top: 10px;
+    margin-left: 250px;
+}
+
+.errors {
+    margin-left: 10px;
+    color: red;
+    font-weight: bold;
+}
