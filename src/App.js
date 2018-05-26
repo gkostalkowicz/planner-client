@@ -11,8 +11,10 @@ class App extends Component {
         super(props);
         this.handleSubmitEvent = this.handleSubmitEvent.bind(this);
         this.handleSelectEvent = this.handleSelectEvent.bind(this);
+        this.handleEditEvent = this.handleEditEvent.bind(this);
+        this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
         this.state = {
-            mainPage: <AddEventForm onSubmit={this.handleSubmitEvent}/>,
+            mainPage: this.homePage(),
             events: [{
                 id: 1,
                 name: 'Birthday party',
@@ -25,6 +27,12 @@ class App extends Component {
                 start: LocalDate.parse('2018-06-01'),
                 end: LocalDate.parse('2018-06-30'),
                 description: 'Think about vacation plans for July and August'
+            }, {
+                id: 3,
+                name: 'Plan apartment change',
+                start: LocalDate.parse('2018-06-15'),
+                end: LocalDate.parse('2018-06-30'),
+                description: 'Check if a new room is available'
             }]
         };
     }
@@ -38,6 +46,10 @@ class App extends Component {
         );
     }
 
+    homePage() {
+        return <AddEventForm onSubmit={this.handleSubmitEvent}/>
+    }
+
     handleSubmitEvent(event) {
         const events = this.state.events;
         event.id = events.length + 1;
@@ -46,7 +58,22 @@ class App extends Component {
     }
 
     handleSelectEvent(event) {
-        this.setState({mainPage: <EventDetails event={event}/>});
+        this.setState({mainPage: <EventDetails event={event} onEdit={this.handleEditEvent}
+                                               onRemove={this.handleRemoveEvent}/>});
+    }
+
+    handleEditEvent(event) {
+        // TODO
+        console.log('edit ', event.name);
+    }
+
+    handleRemoveEvent(event) {
+        const events = this.state.events;
+        const index = events.indexOf(event);
+        if (index > -1) {
+            events.splice(index, 1);
+            this.setState({events: events, mainPage: this.homePage()});
+        }
     }
 }
 
