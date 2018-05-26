@@ -12,14 +12,14 @@ class App extends Component {
             events: [{
                 id: 1,
                 name: 'Birthday party',
-                from: LocalDate.parse('2018-05-25'),
-                to: LocalDate.parse('2018-05-25'),
+                start: LocalDate.parse('2018-05-25'),
+                end: LocalDate.parse('2018-05-25'),
                 description: 'Pawel\'s birtday party'
             }, {
                 id: 2,
                 name: 'Plan vacation',
-                from: LocalDate.parse('2018-06-01'),
-                to: LocalDate.parse('2018-06-30'),
+                start: LocalDate.parse('2018-06-01'),
+                end: LocalDate.parse('2018-06-30'),
                 description: 'Think about vacation plans for July and August'
             }]
         };

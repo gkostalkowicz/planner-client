@@ -12,14 +12,14 @@ class AddEventForm extends Component {
         super(props);
         this.state = {
             name: '',
-            from: moment(),
-            to: moment(),
+            start: moment(),
+            end: moment(),
             description: '',
             fieldErrors: {}
         };
         this.handleChange = this.handleChange.bind(this);
-        this.handleFromChange = this.handleFromChange.bind(this);
-        this.handleToChange = this.handleToChange.bind(this);
+        this.handleStartChange = this.handleStartChange.bind(this);
+        this.handleEndChange = this.handleEndChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.validateField = this.validateField.bind(this);
     }
@@ -32,16 +32,16 @@ class AddEventForm extends Component {
                 <span className="errors">{this.state.fieldErrors.name}</span>
             </div>
             <div className="calendar-row">
-                <DatePicker placeholderText="From" selected={this.state.from} selectsStart
-                            startDate={this.state.from} endDate={this.state.to} onChange={this.handleFromChange}
+                <DatePicker placeholderText="From" selected={this.state.start} selectsStart
+                            startDate={this.state.start} endDate={this.state.end} onChange={this.handleStartChange}
                             dateFormat={DATEPICKER_FORMAT} minDate={moment()}/>
-                <span className="errors">{this.state.fieldErrors.from}</span>
+                <span className="errors">{this.state.fieldErrors.start}</span>
             </div>
             <div className="calendar-row">
-                <DatePicker placeholderText="To" selected={this.state.to} selectsEnd
-                            startDate={this.state.from} endDate={this.state.to} onChange={this.handleToChange}
-                            dateFormat={DATEPICKER_FORMAT} minDate={this.state.from}/>
-                <span className="errors">{this.state.fieldErrors.to}</span>
+                <DatePicker placeholderText="To" selected={this.state.end} selectsEnd
+                            startDate={this.state.start} endDate={this.state.end} onChange={this.handleEndChange}
+                            dateFormat={DATEPICKER_FORMAT} minDate={this.state.start}/>
+                <span className="errors">{this.state.fieldErrors.end}</span>
             </div>
             <div>
                 <textarea name="description" placeholder="Description" value={this.state.description}
@@ -57,16 +57,16 @@ class AddEventForm extends Component {
         this.setState({[name]: value}, () => {this.validateField(name, value)});
     }
 
-    handleFromChange(date) {
+    handleStartChange(date) {
         if (date) {
-            this.setState({from: date, to: moment.max(date, this.state.to)},
-                () => {this.validateField('from', date)});
+            this.setState({start: date, end: moment.max(date, this.state.end)},
+                () => {this.validateField('start', date)});
         }
     }
 
-    handleToChange(date) {
+    handleEndChange(date) {
         if (date) {
-            this.setState({to: date}, () => {this.validateField('to', date)});
+            this.setState({end: date}, () => {this.validateField('end', date)});
         }
     }
 
@@ -93,8 +93,8 @@ class AddEventForm extends Component {
         const state = this.state;
         this.props.onSubmit({
             name: state.name,
-            from: this.momentToLocalDate(state.from),
-            to: this.momentToLocalDate(state.to),
+            start: this.momentToLocalDate(state.start),
+            end: this.momentToLocalDate(state.end),
             description: state.description
         });
     }

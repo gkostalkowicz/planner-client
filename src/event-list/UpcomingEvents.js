@@ -26,10 +26,10 @@ class EventRow extends Component {
     }
 
     formatEventRange(event) {
-        if (event.from.equals(event.to)) {
-            return this.formatDate(event.from)
+        if (event.start.equals(event.end)) {
+            return this.formatDate(event.start)
         } else {
-            return this.formatDate(event.from) + '-' + this.formatDate(event.to);
+            return this.formatDate(event.start) + '-' + this.formatDate(event.end);
         }
     }
 
