@@ -2,13 +2,17 @@ import React, {Component} from "react";
 import {LocalDate} from "js-joda";
 import AddEventForm from "./event-form/AddEventForm.js";
 import UpcomingEvents from "./event-list/UpcomingEvents.js";
+import EventDetails from "./event-details/EventDetails";
 import "./App.css";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+        this.handleSubmitEvent = this.handleSubmitEvent.bind(this);
+        this.handleSelectEvent = this.handleSelectEvent.bind(this);
         this.state = {
+            mainPage: <AddEventForm onSubmit={this.handleSubmitEvent}/>,
             events: [{
                 id: 1,
                 name: 'Birthday party',
@@ -23,23 +27,26 @@ class App extends Component {
                 description: 'Think about vacation plans for July and August'
             }]
         };
-        this.addEvent = this.addEvent.bind(this);
     }
 
-    addEvent(event) {
+    render() {
+        return (
+            <div className="app">
+                <UpcomingEvents events={this.state.events} onSelect={this.handleSelectEvent}/>
+                <div id="main-page">{this.state.mainPage}</div>
+            </div>
+        );
+    }
+
+    handleSubmitEvent(event) {
         const events = this.state.events;
         event.id = events.length + 1;
         events.push(event);
         this.setState({events: events});
     }
 
-    render() {
-        return (
-            <div className="app">
-                <UpcomingEvents events={this.state.events}/>
-                <AddEventForm onSubmit={this.addEvent}/>
-            </div>
-        );
+    handleSelectEvent(event) {
+        this.setState({mainPage: <EventDetails event={event}/>});
     }
 }
 

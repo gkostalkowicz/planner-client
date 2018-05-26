@@ -1,6 +1,5 @@
-import React from "react";
-import {Component} from "react";
-import {DATE_FORMATTER} from "../common/date";
+import React, {Component} from "react";
+import {SHORT_DATE_FORMATTER} from "../common/date";
 import "./upcoming-events.css";
 
 class UpcomingEvents extends Component {
@@ -9,7 +8,7 @@ class UpcomingEvents extends Component {
         return <div className="upcoming-events">
             <h3>Upcoming events</h3>
             {this.props.events.map((event) =>
-                <EventRow key={event.id} event={event}/>
+                <EventRow key={event.id} event={event} onSelect={this.props.onSelect}/>
             )}
         </div>;
     }
@@ -17,12 +16,24 @@ class UpcomingEvents extends Component {
 
 class EventRow extends Component {
 
+    constructor(props) {
+        super(props);
+        this.handleSelect = this.handleSelect.bind(this);
+    }
+
     render() {
         const event = this.props.event;
         return <div style={{clear: 'both'}}>
-            <div style={{float: 'left'}}>{event.name}</div>
-            <div style={{float: 'right'}}>{this.formatEventRange(event)}</div>
+            <a href="#" onClick={this.handleSelect}>
+                <div style={{float: 'left'}}>{event.name}</div>
+                <div style={{float: 'right'}}>{this.formatEventRange(event)}</div>
+            </a>
         </div>;
+    }
+
+    handleSelect(e) {
+        this.props.onSelect(this.props.event);
+        e.preventDefault();
     }
 
     formatEventRange(event) {
@@ -34,7 +45,7 @@ class EventRow extends Component {
     }
 
     formatDate(localDate) {
-        return localDate.format(DATE_FORMATTER);
+        return localDate.format(SHORT_DATE_FORMATTER);
     }
 }
 
