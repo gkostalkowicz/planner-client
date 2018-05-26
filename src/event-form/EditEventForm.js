@@ -2,9 +2,8 @@ import React, {Component} from "react";
 import "./event-form.css";
 import "react-datepicker/dist/react-datepicker.css";
 import EventForm from "./EventForm";
-import {LocalDate} from "js-joda";
 
-class AddEventForm extends Component {
+class EditEventForm extends Component {
 
     constructor(props) {
         super(props);
@@ -12,13 +11,7 @@ class AddEventForm extends Component {
     }
 
     render() {
-        const emptyEvent = {
-            name: '',
-            start: LocalDate.now(),
-            end: LocalDate.now(),
-            description: ''
-        };
-        return <EventForm formTitle="New Event" event={emptyEvent} onSubmit={this.handleSubmit}/>
+        return <EventForm formTitle="Update Event" event={this.props.event} onSubmit={this.handleSubmit}/>
     }
 
     handleSubmit(event) {
@@ -26,4 +19,4 @@ class AddEventForm extends Component {
     }
 }
 
-export default AddEventForm;
+export default EditEventForm;

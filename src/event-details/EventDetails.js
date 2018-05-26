@@ -14,7 +14,7 @@ class EventDetails extends React.Component {
             <h3>{this.props.event.name}</h3>
             <EventActionBar event={this.props.event} onEdit={this.handleEdit} onRemove={this.handleRemove}/>
             <EventDate start={this.props.event.start} end={this.props.event.end}/>
-            <EventDescription description={this.props.description}/>
+            <EventDescription description={this.props.event.description}/>
         </div>
     }
 
@@ -75,7 +75,7 @@ class EventDescription extends React.Component {
     render() {
         const description = this.props.description;
         if (!description) {
-            return <div>This event has no description yet. Choose "Edit" to add a description.</div>
+            return <div>This event has no description yet. Click "Edit" to add a description.</div>
         } else {
             return <div>{description}</div>
         }

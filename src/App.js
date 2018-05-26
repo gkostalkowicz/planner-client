@@ -4,14 +4,16 @@ import AddEventForm from "./event-form/AddEventForm.js";
 import UpcomingEvents from "./event-list/UpcomingEvents.js";
 import EventDetails from "./event-details/EventDetails";
 import "./App.css";
+import EditEventForm from "./event-form/EditEventForm";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.handleSubmitEvent = this.handleSubmitEvent.bind(this);
-        this.handleSelectEvent = this.handleSelectEvent.bind(this);
-        this.handleEditEvent = this.handleEditEvent.bind(this);
+        this.handleDisplayEventDetails = this.handleDisplayEventDetails.bind(this);
+        this.handleDisplayEventEditForm = this.handleDisplayEventEditForm.bind(this);
+        this.handleAddEvent = this.handleAddEvent.bind(this);
+        this.handleUpdateEvent = this.handleUpdateEvent.bind(this);
         this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
         this.state = {
             mainPage: this.homePage(),
@@ -40,31 +42,39 @@ class App extends Component {
     render() {
         return (
             <div className="app">
-                <UpcomingEvents events={this.state.events} onSelect={this.handleSelectEvent}/>
+                <UpcomingEvents events={this.state.events} onSelect={this.handleDisplayEventDetails}/>
                 <div id="main-page">{this.state.mainPage}</div>
             </div>
         );
     }
 
     homePage() {
-        return <AddEventForm onSubmit={this.handleSubmitEvent}/>
+        return <AddEventForm onSubmit={this.handleAddEvent}/>
     }
 
-    handleSubmitEvent(event) {
+    handleDisplayEventDetails(event) {
+        this.setState({mainPage: <EventDetails event={event} onEdit={this.handleDisplayEventEditForm}
+                                               onRemove={this.handleRemoveEvent}/>});
+    }
+
+    handleDisplayEventEditForm(event) {
+        this.setState({mainPage: <EditEventForm event={event} onSubmit={this.handleUpdateEvent}/>});
+    }
+
+    handleAddEvent(event) {
         const events = this.state.events;
         event.id = events.length + 1;
         events.push(event);
         this.setState({events: events});
     }
 
-    handleSelectEvent(event) {
-        this.setState({mainPage: <EventDetails event={event} onEdit={this.handleEditEvent}
-                                               onRemove={this.handleRemoveEvent}/>});
-    }
-
-    handleEditEvent(event) {
-        // TODO
-        console.log('edit ', event.name);
+    handleUpdateEvent(event) {
+        const events = this.state.events;
+        const index = events.findIndex((e) => e.id === event.id);
+        if (index > -1) {
+            events[index] = event;
+            this.setState({events: events, mainPage: this.homePage()});
+        }
     }
 
     handleRemoveEvent(event) {
