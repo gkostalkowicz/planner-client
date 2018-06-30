@@ -1,15 +1,16 @@
 import React, {Component} from "react";
-import {LocalDate} from "js-joda";
-import AddEventForm from "./event-form/AddEventForm.js";
-import UpcomingEvents from "./event-list/UpcomingEvents.js";
+import * as EventStore from './common/EventStore';
+import AddEventForm from "./event-form/AddEventForm";
+import UpcomingEvents from "./event-list/UpcomingEvents";
 import EventDetails from "./event-details/EventDetails";
-import "./App.css";
 import EditEventForm from "./event-form/EditEventForm";
+import "./App.css";
 
 class App extends Component {
 
     constructor(props) {
         super(props);
+        this.handleEventsUpdated = this.handleEventsUpdated.bind(this);
         this.handleDisplayEventDetails = this.handleDisplayEventDetails.bind(this);
         this.handleDisplayEventEditForm = this.handleDisplayEventEditForm.bind(this);
         this.handleAddEvent = this.handleAddEvent.bind(this);
@@ -17,26 +18,16 @@ class App extends Component {
         this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
         this.state = {
             mainPage: this.homePage(),
-            events: [{
-                id: 1,
-                name: 'Birthday party',
-                start: LocalDate.parse('2018-05-25'),
-                end: LocalDate.parse('2018-05-25'),
-                description: 'Pawel\'s birtday party'
-            }, {
-                id: 2,
-                name: 'Plan vacation',
-                start: LocalDate.parse('2018-06-01'),
-                end: LocalDate.parse('2018-06-30'),
-                description: 'Think about vacation plans for July and August'
-            }, {
-                id: 3,
-                name: 'Plan apartment change',
-                start: LocalDate.parse('2018-06-15'),
-                end: LocalDate.parse('2018-06-30'),
-                description: 'Check if a new room is available'
-            }]
+            events: EventStore.getEvents()
         };
+    }
+
+    componentWillMount() {
+        EventStore.subscribe(this.handleEventsUpdated);
+    }
+
+    componentWillUnmount() {
+        EventStore.unsubscribe(this.handleEventsUpdated);
     }
 
     render() {
@@ -52,9 +43,15 @@ class App extends Component {
         return <AddEventForm onSubmit={this.handleAddEvent}/>
     }
 
+    handleEventsUpdated() {
+        this.setState({events: EventStore.getEvents()});
+    }
+
     handleDisplayEventDetails(event) {
-        this.setState({mainPage: <EventDetails event={event} onEdit={this.handleDisplayEventEditForm}
-                                               onRemove={this.handleRemoveEvent}/>});
+        this.setState({
+            mainPage: <EventDetails event={event} onEdit={this.handleDisplayEventEditForm}
+                                    onRemove={this.handleRemoveEvent}/>
+        });
     }
 
     handleDisplayEventEditForm(event) {
@@ -62,28 +59,17 @@ class App extends Component {
     }
 
     handleAddEvent(event) {
-        const events = this.state.events;
-        event.id = events.length + 1;
-        events.push(event);
-        this.setState({events: events});
+        EventStore.addEvent(event);
     }
 
     handleUpdateEvent(event) {
-        const events = this.state.events;
-        const index = events.findIndex((e) => e.id === event.id);
-        if (index > -1) {
-            events[index] = event;
-            this.setState({events: events, mainPage: this.homePage()});
-        }
+        EventStore.updateEvent(event);
+        this.setState({mainPage: this.homePage()});
     }
 
     handleRemoveEvent(event) {
-        const events = this.state.events;
-        const index = events.indexOf(event);
-        if (index > -1) {
-            events.splice(index, 1);
-            this.setState({events: events, mainPage: this.homePage()});
-        }
+        EventStore.removeEvent(event);
+        this.setState({mainPage: this.homePage()});
     }
 }
 
