@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {LocalDate} from "js-joda";
 import * as EventStore from './common/EventStore';
 import UpcomingEvents from "./event-list/UpcomingEvents";
 import EventDetails from "./event-details/EventDetails";
@@ -44,9 +45,12 @@ export default class App extends Component {
     // render
 
     render() {
+        const today = LocalDate.now();
         return (
             <div className="app">
-                <UpcomingEvents events={this.state.events} onSelectEvent={this.handleDisplayEventDetails}/>
+                <UpcomingEvents
+                    events={this.state.events.filter(event => !event.end.isBefore(today))}
+                    onSelectEvent={this.handleDisplayEventDetails}/>
                 <div id="main-page">
                     <CalendarPane onAddEvent={this.handleDisplayAddEventForm}
                                   onSelectEvent={this.handleDisplayEventDetails}/>

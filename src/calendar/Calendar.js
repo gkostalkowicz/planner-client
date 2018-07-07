@@ -12,7 +12,7 @@ export default class Calendar extends Component {
             {this.daysOfWeekHeader()}
             {days.map((row, idx) => <tr key={idx}>
                 {row.map(day =>
-                    <DayCell day={day} yearMonth={this.props.yearMonth} index={idx}
+                    <DayCell day={day} yearMonth={this.props.yearMonth} key={day.format(INDEX_FORMATTER)}
                              onSelectDay={this.props.onSelectDay}/>
                 )}
             </tr>)}
@@ -53,7 +53,7 @@ class DayCell extends Component {
 
     render() {
         const day = this.props.day;
-        return <td className={this.getClassName()} key={day.format(INDEX_FORMATTER)}>
+        return <td className={this.getClassName()}>
             <a href="#" onClick={() => this.props.onSelectDay(day)}>
                 {day.dayOfMonth()}
             </a>

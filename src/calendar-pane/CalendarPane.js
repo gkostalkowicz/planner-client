@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import Calendar from "../calendar/Calendar";
 import {YearMonth} from "js-joda";
 import {MONTH_NAMES} from "../common/date";
-import EventService from "../common/EventService";
+import eventService from "../common/EventService";
 import UpcomingEvents from "../event-list/UpcomingEvents";
 import "./CalendarPane.css";
+import EventsOnDay from "../event-list/EventsOnDay";
 
 export default class CalendarPane extends Component {
 
@@ -34,8 +35,9 @@ export default class CalendarPane extends Component {
 
             {this.state.selectedDay &&
                 <div className="events-on-day">
-                    <UpcomingEvents events={EventService.getEventsOnDay(this.state.selectedDay)}
-                                    onSelectEvent={this.props.onSelectEvent}/>
+                    <EventsOnDay events={eventService.getEventsOnDay(this.state.selectedDay)}
+                                    onSelectEvent={this.props.onSelectEvent}
+                                    day={this.state.selectedDay}/>
                 </div>
             }
         </div>;
