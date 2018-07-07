@@ -1,40 +1,26 @@
 import React, {Component} from "react";
 import "./Calendar.css";
 import {DAY_OF_WEEK_NAMES} from "../common/date";
-import {LocalDate} from "js-joda";
+import {DateTimeFormatter, LocalDate} from "js-joda";
 
 export default class Calendar extends Component {
 
-    constructor(props) {
-        super(props);
-        this.renderDay = this.renderDay.bind(this);
-    }
-
     render() {
-        const days = this.calculateDays(this.props.yearMonth);
-        return <table className="calendar"><tbody>
-        {this.daysOfWeekHeader()}
-        {days.map((row, idx) => <tr key={idx}>
-            {row.map(this.renderDay)}
-        </tr>)}
-        </tbody></table>;
+        const days = this.createRowsAndColumns(this.props.yearMonth);
+        return <table className="calendar">
+            <tbody>
+            {this.daysOfWeekHeader()}
+            {days.map((row, idx) => <tr key={idx}>
+                {row.map(day =>
+                    <DayCell day={day} yearMonth={this.props.yearMonth} index={idx}
+                             onSelectDay={this.props.onSelectDay}/>
+                )}
+            </tr>)}
+            </tbody>
+        </table>;
     }
 
-    renderDay(day, idx) {
-        let className;
-        if (day.month() === this.props.yearMonth.month()) {
-            className = "current-month";
-            if (day.equals(LocalDate.now())) {
-                className += ' today';
-            }
-        } else {
-            className = "not-current-month";
-        }
-
-        return <td className={className} key={idx}>{day.dayOfMonth()}</td>;
-    }
-
-    calculateDays(yearMonth) {
+    createRowsAndColumns(yearMonth) {
         let currentDay = this.getFirstDisplayedDay(yearMonth);
         const days = [];
 
@@ -56,6 +42,35 @@ export default class Calendar extends Component {
     }
 
     daysOfWeekHeader() {
-        return <tr key="header">{DAY_OF_WEEK_NAMES.map((day, idx) => <td key={idx}>{day}</td>)}</tr>;
+        return <tr key="header">{DAY_OF_WEEK_NAMES.map((day, idx) => <th key={idx}>{day}</th>)}</tr>;
+    }
+}
+
+
+const INDEX_FORMATTER = DateTimeFormatter.ofPattern('MM-dd');
+
+class DayCell extends Component {
+
+    render() {
+        const day = this.props.day;
+        return <td className={this.getClassName()} key={day.format(INDEX_FORMATTER)}>
+            <a href="#" onClick={() => this.props.onSelectDay(day)}>
+                {day.dayOfMonth()}
+            </a>
+        </td>;
+    }
+
+    getClassName() {
+        const day = this.props.day;
+        let className = "day";
+        if (day.month() === this.props.yearMonth.month()) {
+            className += " current-month";
+            if (day.equals(LocalDate.now())) {
+                className += ' today';
+            }
+        } else {
+            className += " not-current-month";
+        }
+        return className;
     }
 }

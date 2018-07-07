@@ -3,18 +3,35 @@ table.calendar {
     table-layout: fixed;
 }
 
-table.calendar td {
+table.calendar th {
     padding: 10px 5px;
     text-align: right;
+    border: none;
 }
 
-table.calendar td.current-month {
+table.calendar td {
+    text-align: right;
+    border: none;
 }
 
-table.calendar td.not-current-month {
+td.day a {
+    padding: 10px 5px;
+    display: block;
+    color: black;
+    text-decoration: none;
+}
+
+td.day a:hover {
+    background-color: #ddd;
+}
+
+td.current-month {
+}
+
+td.not-current-month a {
     color: #bbb;
 }
 
-table.calendar td.today {
+td.today {
     background-color: #b3e6ff;
 }

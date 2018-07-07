@@ -8,7 +8,7 @@ export default class UpcomingEvents extends Component {
         return <div className="upcoming-events">
             <h3>Upcoming events</h3>
             {this.props.events.map((event) =>
-                <EventRow key={event.id} event={event} onSelect={this.props.onSelect}/>
+                <EventRow key={event.id} event={event} onSelectEvent={this.props.onSelectEvent}/>
             )}
         </div>;
     }
@@ -32,7 +32,7 @@ class EventRow extends Component {
     }
 
     handleSelect(e) {
-        this.props.onSelect(this.props.event);
+        this.props.onSelectEvent(this.props.event);
         e.preventDefault();
     }
 

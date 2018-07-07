@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import Calendar from "../calendar/Calendar";
 import {YearMonth} from "js-joda";
 import {MONTH_NAMES} from "../common/date";
+import EventService from "../common/EventService";
+import UpcomingEvents from "../event-list/UpcomingEvents";
 import "./CalendarPane.css";
 
 export default class CalendarPane extends Component {
@@ -9,10 +11,12 @@ export default class CalendarPane extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            yearMonth: YearMonth.now0()
+            yearMonth: YearMonth.now0(),
+            selectedDay: null
         };
         this.handlePreviousMonth = this.handlePreviousMonth.bind(this);
         this.handleNextMonth = this.handleNextMonth.bind(this);
+        this.handleSelectDay = this.handleSelectDay.bind(this);
     }
 
     render() {
@@ -26,7 +30,14 @@ export default class CalendarPane extends Component {
                 <a href="#" onClick={this.handleNextMonth}>Next ▶</a>
             </div>
 
-            <Calendar yearMonth={yearMonth}/>
+            <Calendar yearMonth={yearMonth} onSelectDay={this.handleSelectDay}/>
+
+            {this.state.selectedDay &&
+                <div className="events-on-day">
+                    <UpcomingEvents events={EventService.getEventsOnDay(this.state.selectedDay)}
+                                    onSelectEvent={this.props.onSelectEvent}/>
+                </div>
+            }
         </div>;
     }
 
@@ -38,5 +49,9 @@ export default class CalendarPane extends Component {
     handleNextMonth(e) {
         e.preventDefault();
         this.setState({yearMonth: this.state.yearMonth.plusMonths(1)});
+    }
+
+    handleSelectDay(day) {
+        this.setState({selectedDay: day});
     }
 }
