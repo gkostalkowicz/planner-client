@@ -34,7 +34,8 @@ export default class EventForm extends Component {
         return <form className="add-event-form" onSubmit={this.handleSubmit}>
             <h3>{this.props.formTitle}</h3>
             <div>
-                <input name="name" type="text" placeholder="Name" value={event.name} onChange={this.handleChange}/>
+                <input name="name" type="text" placeholder="Name" value={event.name} onChange={this.handleChange}
+                       autoFocus/>
                 <span className="errors">{fieldErrors.name}</span>
             </div>
             <div className="calendar-row">

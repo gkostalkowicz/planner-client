@@ -10,7 +10,7 @@ export default class Window extends Component {
 
     render() {
         return <div>
-            <div className="shadow"/>
+            <div className="shadow" onClick={this.props.onClose}/>
             <div className="window">
                 <div className="close-button">
                     <a href="#" onClick={this.props.onClose}>Close ✖</a>

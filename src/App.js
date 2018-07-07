@@ -19,6 +19,7 @@ export default class App extends Component {
         this.handleEventAdded = this.handleEventAdded.bind(this);
         this.handleEventUpdated = this.handleEventUpdated.bind(this);
         this.handleEventRemoved = this.handleEventRemoved.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
         this.closeWindow = this.closeWindow.bind(this);
         this.state = {
             events: EventStore.getEvents(),
@@ -31,10 +32,12 @@ export default class App extends Component {
 
     componentWillMount() {
         EventStore.subscribe(this.handleEventsUpdated);
+        document.addEventListener('keypress', this.handleKeyPress);
     }
 
     componentWillUnmount() {
         EventStore.unsubscribe(this.handleEventsUpdated);
+        document.removeEventListener('keypress', this.handleKeyPress);
     }
 
     // =============================================================
@@ -86,6 +89,12 @@ export default class App extends Component {
     handleEventRemoved(event) {
         EventStore.removeEvent(event);
         this.closeWindow();
+    }
+
+    handleKeyPress(e) {
+        if (e.key === "Escape") {
+            this.closeWindow();
+        }
     }
 
     // =============================================================
