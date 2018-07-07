@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import * as EventStore from './common/EventStore';
-import AddEventForm from "./event-form/AddEventForm";
 import UpcomingEvents from "./event-list/UpcomingEvents";
 import EventDetails from "./event-details/EventDetails";
 import EditEventForm from "./event-form/EditEventForm";
+import CalendarPane from "./calendar-pane/CalendarPane";
 import "./App.css";
 
 class App extends Component {
@@ -40,7 +40,8 @@ class App extends Component {
     }
 
     homePage() {
-        return <AddEventForm onSubmit={this.handleAddEvent}/>
+        // return <AddEventForm onSubmit={this.handleAddEvent}/>
+        return <CalendarPane/>
     }
 
     handleEventsUpdated() {

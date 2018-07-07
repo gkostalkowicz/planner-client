@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment/moment";
 import {DATEPICKER_FORMAT, localDateToMoment, momentToLocalDate} from "../common/date";
-import "./event-form.css";
+import "./EventForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 class EventForm extends Component {

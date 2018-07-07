@@ -1,6 +1,11 @@
 import {DateTimeFormatter, LocalDate, nativeJs} from "js-joda";
 import moment from "moment";
 
+export const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+    'October', 'November', 'December'];
+
+export const DAY_OF_WEEK_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
 export const SHORT_DATE_FORMATTER = DateTimeFormatter.ofPattern('dd.MM');
 
 export const LONG_DATE_FORMATTER = DateTimeFormatter.ofPattern('dd.MM.yyyy');

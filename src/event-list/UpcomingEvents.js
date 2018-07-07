@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {SHORT_DATE_FORMATTER} from "../common/date";
-import "./upcoming-events.css";
+import "./UpcomingEvents.css";
 
 class UpcomingEvents extends Component {
 

@@ -1,0 +1,20 @@
+table.calendar {
+    width: 500px;
+    table-layout: fixed;
+}
+
+table.calendar td {
+    padding: 10px 5px;
+    text-align: right;
+}
+
+table.calendar td.current-month {
+}
+
+table.calendar td.not-current-month {
+    color: #bbb;
+}
+
+table.calendar td.today {
+    background-color: #b3e6ff;
+}

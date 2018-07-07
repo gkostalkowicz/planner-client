@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./event-form.css";
+import "./EventForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 import EventForm from "./EventForm";
 
