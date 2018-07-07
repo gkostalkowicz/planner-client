@@ -1,7 +1,7 @@
 import React from "react";
 import {LONG_DATE_FORMATTER} from "../common/date";
 
-class EventDetails extends React.Component {
+export default class EventDetails extends React.Component {
 
     constructor(props) {
         super(props);
@@ -81,5 +81,3 @@ class EventDescription extends React.Component {
         }
     }
 }
-
-export default EventDetails;

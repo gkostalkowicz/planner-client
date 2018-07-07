@@ -4,23 +4,30 @@ import UpcomingEvents from "./event-list/UpcomingEvents";
 import EventDetails from "./event-details/EventDetails";
 import EditEventForm from "./event-form/EditEventForm";
 import CalendarPane from "./calendar-pane/CalendarPane";
+import AddEventForm from "./event-form/AddEventForm";
+import Window from "./window/Window";
 import "./App.css";
 
-class App extends Component {
+export default class App extends Component {
 
     constructor(props) {
         super(props);
         this.handleEventsUpdated = this.handleEventsUpdated.bind(this);
         this.handleDisplayEventDetails = this.handleDisplayEventDetails.bind(this);
-        this.handleDisplayEventEditForm = this.handleDisplayEventEditForm.bind(this);
-        this.handleAddEvent = this.handleAddEvent.bind(this);
-        this.handleUpdateEvent = this.handleUpdateEvent.bind(this);
-        this.handleRemoveEvent = this.handleRemoveEvent.bind(this);
+        this.handleDisplayAddEventForm = this.handleDisplayAddEventForm.bind(this);
+        this.handleDisplayEditEventForm = this.handleDisplayEditEventForm.bind(this);
+        this.handleEventAdded = this.handleEventAdded.bind(this);
+        this.handleEventUpdated = this.handleEventUpdated.bind(this);
+        this.handleEventRemoved = this.handleEventRemoved.bind(this);
+        this.closeWindow = this.closeWindow.bind(this);
         this.state = {
-            mainPage: this.homePage(),
-            events: EventStore.getEvents()
+            events: EventStore.getEvents(),
+            windowContent: null
         };
     }
+
+    // =============================================================
+    // lifecycle
 
     componentWillMount() {
         EventStore.subscribe(this.handleEventsUpdated);
@@ -30,19 +37,22 @@ class App extends Component {
         EventStore.unsubscribe(this.handleEventsUpdated);
     }
 
+    // =============================================================
+    // render
+
     render() {
         return (
             <div className="app">
                 <UpcomingEvents events={this.state.events} onSelect={this.handleDisplayEventDetails}/>
-                <div id="main-page">{this.state.mainPage}</div>
+                <div id="main-page"><CalendarPane onAddEvent={this.handleDisplayAddEventForm}/></div>
+                {this.state.windowContent
+                    && <Window content={this.state.windowContent} onClose={this.closeWindow}/>}
             </div>
         );
     }
 
-    homePage() {
-        // return <AddEventForm onSubmit={this.handleAddEvent}/>
-        return <CalendarPane/>
-    }
+    // =============================================================
+    // event handling
 
     handleEventsUpdated() {
         this.setState({events: EventStore.getEvents()});
@@ -50,28 +60,38 @@ class App extends Component {
 
     handleDisplayEventDetails(event) {
         this.setState({
-            mainPage: <EventDetails event={event} onEdit={this.handleDisplayEventEditForm}
-                                    onRemove={this.handleRemoveEvent}/>
+            windowContent: <EventDetails event={event} onEdit={this.handleDisplayEditEventForm}
+                                         onRemove={this.handleEventRemoved}/>
         });
     }
 
-    handleDisplayEventEditForm(event) {
-        this.setState({mainPage: <EditEventForm event={event} onSubmit={this.handleUpdateEvent}/>});
+    handleDisplayAddEventForm() {
+        this.setState({windowContent: <AddEventForm onSubmit={this.handleEventAdded}/>});
     }
 
-    handleAddEvent(event) {
+    handleDisplayEditEventForm(event) {
+        this.setState({windowContent: <EditEventForm event={event} onSubmit={this.handleEventUpdated}/>});
+    }
+
+    handleEventAdded(event) {
         EventStore.addEvent(event);
+        this.closeWindow();
     }
 
-    handleUpdateEvent(event) {
+    handleEventUpdated(event) {
         EventStore.updateEvent(event);
-        this.setState({mainPage: this.homePage()});
+        this.handleDisplayEventDetails(event);
     }
 
-    handleRemoveEvent(event) {
+    handleEventRemoved(event) {
         EventStore.removeEvent(event);
-        this.setState({mainPage: this.homePage()});
+        this.closeWindow();
+    }
+
+    // =============================================================
+    // helpers
+
+    closeWindow() {
+        this.setState({windowContent: null});
     }
 }
-
-export default App;

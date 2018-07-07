@@ -18,11 +18,14 @@ export default class CalendarPane extends Component {
     render() {
         const yearMonth = this.state.yearMonth;
         return <div>
+            <div className="add-event-link"><a href="#" onClick={this.props.onAddEvent}>⊕ New event</a></div>
+
             <h2>{MONTH_NAMES[yearMonth.monthValue() - 1] + ' ' + yearMonth.year()}</h2>
             <div className="month-chooser">
                 <a href="#" onClick={this.handlePreviousMonth}>◀ Previous</a> |{' '}
                 <a href="#" onClick={this.handleNextMonth}>Next ▶</a>
             </div>
+
             <Calendar yearMonth={yearMonth}/>
         </div>;
     }

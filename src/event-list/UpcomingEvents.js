@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {SHORT_DATE_FORMATTER} from "../common/date";
 import "./UpcomingEvents.css";
 
-class UpcomingEvents extends Component {
+export default class UpcomingEvents extends Component {
 
     render() {
         return <div className="upcoming-events">
@@ -48,5 +48,3 @@ class EventRow extends Component {
         return localDate.format(SHORT_DATE_FORMATTER);
     }
 }
-
-export default UpcomingEvents;

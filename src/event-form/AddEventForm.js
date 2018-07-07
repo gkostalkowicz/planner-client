@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import EventForm from "./EventForm";
 import {LocalDate} from "js-joda";
 
-class AddEventForm extends Component {
+export default class AddEventForm extends Component {
 
     constructor(props) {
         super(props);
@@ -25,5 +25,3 @@ class AddEventForm extends Component {
         this.props.onSubmit(event);
     }
 }
-
-export default AddEventForm;

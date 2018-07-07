@@ -3,7 +3,7 @@ import "./EventForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 import EventForm from "./EventForm";
 
-class EditEventForm extends Component {
+export default class EditEventForm extends Component {
 
     constructor(props) {
         super(props);
@@ -18,5 +18,3 @@ class EditEventForm extends Component {
         this.props.onSubmit(event);
     }
 }
-
-export default EditEventForm;

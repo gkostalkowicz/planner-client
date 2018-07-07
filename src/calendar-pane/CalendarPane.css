@@ -2,3 +2,12 @@
     font-size: 1em;
     font-weight: bold;
 }
+
+.add-event-link {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+}

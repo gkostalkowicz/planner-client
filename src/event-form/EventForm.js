@@ -5,7 +5,7 @@ import {DATEPICKER_FORMAT, localDateToMoment, momentToLocalDate} from "../common
 import "./EventForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-class EventForm extends Component {
+export default class EventForm extends Component {
 
     constructor(props) {
         super(props);
@@ -108,5 +108,3 @@ class EventForm extends Component {
         });
     }
 }
-
-export default EventForm;
