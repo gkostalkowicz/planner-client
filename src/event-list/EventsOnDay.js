@@ -29,6 +29,7 @@ export default class EventsOnDay extends Component {
         return eventService.compareEventsForSort(e1, e2);
     }
 
+    // TODO this could be a method on the domain object
     static lengthInDays(event) {
         return event.start.until(event.end, ChronoUnit.DAYS);
     }

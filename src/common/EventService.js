@@ -1,4 +1,5 @@
 import * as EventStore from "./EventStore";
+import {forEachDay, maxDate, minDate} from "./date";
 
 class EventService {
 
@@ -15,8 +16,34 @@ class EventService {
 
     getEventsOnDay(day) {
         return this.events
-            .filter(event => event.start.compareTo(day) <= 0)
-            .filter(event => event.end.compareTo(day) >= 0);
+            .filter(event => EventService.isEventBetween(event, day, day));
+    }
+
+    getEventIntensityOnEveryDayOfMonth(yearMonth) {
+        const firstDayOfMonth = yearMonth.atDay(1);
+        const lastDayOfMonth = yearMonth.atEndOfMonth();
+
+        const eventCountByDay = new Map();
+        forEachDay(firstDayOfMonth, lastDayOfMonth, date => eventCountByDay.set(date.toString(), 0));
+
+        this.events
+            .filter(event => EventService.isEventBetween(event, firstDayOfMonth, lastDayOfMonth))
+            .forEach(event => {
+                const from = maxDate(event.start, firstDayOfMonth);
+                const to = minDate(event.end, lastDayOfMonth);
+                forEachDay(from, to,
+                        date => eventCountByDay.set(date.toString(), eventCountByDay.get(date.toString()) + 1)
+                );
+            });
+
+        let maxCount = 0;
+        eventCountByDay.forEach((count) =>
+            maxCount = Math.max(count, maxCount));
+
+        const eventIntensityByDay = new Map();
+        eventCountByDay.forEach((count, dayString) =>
+                eventIntensityByDay.set(dayString, maxCount === 0 ? 0 : count / maxCount));
+        return eventIntensityByDay;
     }
 
     compareEventsForSort(event1, event2) {
@@ -40,6 +67,11 @@ class EventService {
         } else {
             return 1;
         }
+    }
+
+    // TODO this could be a method on the domain object
+    static isEventBetween(event, rangeStart, rangeEnd) {
+        return !(event.start.isAfter(rangeEnd) || event.end.isBefore(rangeStart));
     }
 }
 

@@ -2,17 +2,21 @@ import React, {Component} from "react";
 import "./Calendar.css";
 import {DAY_OF_WEEK_NAMES} from "../common/date";
 import {DateTimeFormatter, LocalDate} from "js-joda";
+import eventService from "../common/EventService";
 
 export default class Calendar extends Component {
 
     render() {
+        const eventIntensityByDay = eventService.getEventIntensityOnEveryDayOfMonth(this.props.yearMonth);
+
         const days = this.createRowsAndColumns(this.props.yearMonth);
         return <table className="calendar">
             <tbody>
             {this.daysOfWeekHeader()}
             {days.map((row, idx) => <tr key={idx}>
                 {row.map(day =>
-                    <DayCell day={day} yearMonth={this.props.yearMonth} key={day.format(INDEX_FORMATTER)}
+                    <DayCell key={day.format(INDEX_FORMATTER)} day={day} yearMonth={this.props.yearMonth}
+                             eventIntensity={eventIntensityByDay.get(day.toString())}
                              onSelectDay={this.props.onSelectDay}/>
                 )}
             </tr>)}
@@ -53,7 +57,7 @@ class DayCell extends Component {
 
     render() {
         const day = this.props.day;
-        return <td className={this.getClassName()}>
+        return <td className={this.getClassName()} style={this.getInlineStyle()}>
             <a href="#" onClick={() => this.props.onSelectDay(day)}>
                 {day.dayOfMonth()}
             </a>
@@ -72,5 +76,9 @@ class DayCell extends Component {
             className += " not-current-month";
         }
         return className;
+    }
+
+    getInlineStyle() {
+        return {backgroundColor: `rgb(255, 221, 0, ${this.props.eventIntensity})`};
     }
 }

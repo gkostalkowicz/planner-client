@@ -6,12 +6,10 @@ table.calendar {
 table.calendar th {
     padding: 10px 5px;
     text-align: right;
-    border: none;
 }
 
 table.calendar td {
     text-align: right;
-    border: none;
 }
 
 td.day a {
@@ -33,5 +31,6 @@ td.not-current-month a {
 }
 
 td.today {
-    background-color: #b3e6ff;
+    /*background-color: #b3e6ff;*/
+    border: 2px dotted black;
 }
