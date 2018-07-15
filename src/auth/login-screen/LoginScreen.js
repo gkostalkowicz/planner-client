@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import LoginForm from "../login-form/LoginForm";
-import authService from "../common/AuthService";
+import authService from "../AuthService";
 import "./LoginScreen.css";
 
 export default class LoginScreen extends Component {

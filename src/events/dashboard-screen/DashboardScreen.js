@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {LocalDate} from "js-joda";
-import * as EventStore from '../common/EventStore';
+import * as EventStore from '../EventStore';
 import UpcomingEvents from "../event-list/UpcomingEvents";
 import EventDetails from "../event-details/EventDetails";
 import EditEventForm from "../event-form/EditEventForm";
 import CalendarPane from "../calendar-pane/CalendarPane";
 import AddEventForm from "../event-form/AddEventForm";
-import Window from "../window/Window";
+import Window from "../../common/window/Window";
 import "./DashboardScreen.css";
 
 export default class DashboardScreen extends Component {

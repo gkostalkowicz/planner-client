@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment/moment";
-import {DATEPICKER_FORMAT, localDateToMoment, momentToLocalDate} from "../common/date";
+import {DATEPICKER_FORMAT, localDateToMoment, momentToLocalDate} from "../date";
 import "./EventForm.css";
 import "react-datepicker/dist/react-datepicker.css";
 

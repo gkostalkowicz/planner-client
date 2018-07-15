@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "./App.css";
-import LoginScreen from "./login-screen/LoginScreen";
-import authService from "./common/AuthService";
-import DashboardScreen from "./dashboard-screen/DashboardScreen";
+import LoginScreen from "./auth/login-screen/LoginScreen";
+import authService from "./auth/AuthService";
+import DashboardScreen from "./events/dashboard-screen/DashboardScreen";
 
 export default class App extends Component {
 

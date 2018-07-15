@@ -1,5 +1,5 @@
 import React from "react";
-import {LONG_DATE_FORMATTER} from "../common/date";
+import {LONG_DATE_FORMATTER} from "../date";
 
 export default class EventDetails extends React.Component {
 

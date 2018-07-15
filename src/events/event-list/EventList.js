@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {SHORT_DATE_FORMATTER} from "../common/date";
+import {SHORT_DATE_FORMATTER} from "../date";
 
 export default class EventList extends Component {
 

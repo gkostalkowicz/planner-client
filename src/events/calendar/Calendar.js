@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import "./Calendar.css";
-import {DAY_OF_WEEK_NAMES} from "../common/date";
+import {DAY_OF_WEEK_NAMES} from "../date";
 import {DateTimeFormatter, LocalDate} from "js-joda";
-import eventService from "../common/EventService";
+import eventService from "../EventService";
 
 export default class Calendar extends Component {
 

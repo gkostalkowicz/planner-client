@@ -1,4 +1,4 @@
-import * as ApiService from "./ApiService";
+import * as ApiService from "../common/ApiService";
 import {LocalDate} from "js-joda";
 import {EventEmitter} from "events";
 

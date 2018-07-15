@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Calendar from "../calendar/Calendar";
 import {YearMonth} from "js-joda";
-import {MONTH_NAMES} from "../common/date";
-import eventService from "../common/EventService";
+import {MONTH_NAMES} from "../date";
+import eventService from "../EventService";
 import EventsOnDay from "../event-list/EventsOnDay";
-import authService from "../common/AuthService";
+import authService from "../../auth/AuthService";
 import "./CalendarPane.css";
 
 export default class CalendarPane extends Component {

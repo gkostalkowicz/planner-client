@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import {SHORT_DATE_FORMATTER} from "../common/date";
+import {SHORT_DATE_FORMATTER} from "../date";
 import EventList from "./EventList";
-import eventService from "../common/EventService";
+import eventService from "../EventService";
 import "./UpcomingEvents.css";
 
 export default class UpcomingEvents extends Component {
