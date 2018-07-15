@@ -1,36 +1,33 @@
 import axios from 'axios';
+import authService from '../auth/AuthService';
 
 const baseUrl = 'http://localhost:3030';
 
 export function get(url) {
-    return axios.get(getUrl(url))
-        .then(response => {
-            return {data: response.data}
-        })
-        .catch(error => handleError(error, url));
+    return sendRequest('get', url);
 }
 
 export function post(url, data) {
-    return axios.post(getUrl(url), data)
-        .then(response => {
-            return {data: response.data}
-        })
-        .catch(error => handleError(error, url));
+    return sendRequest('post', url, data);
 }
 
 export function put(url, data) {
-    return axios.put(getUrl(url), data)
-        .then(response => {
-            return {data: response.data}
-        })
-        .catch(error => handleError(error, url));
+    return sendRequest('put', url, data);
 }
 
 export function delete_(url) {
-    return axios.delete(getUrl(url))
-        .then(response => {
-            return {data: response.data}
-        })
+    return sendRequest('delete', url);
+}
+
+function sendRequest(method, url, data) {
+    const config = {
+        method: method,
+        url: getUrl(url),
+        data: data,
+        headers: {'X-Username': authService.getUsername()}
+    };
+    return axios(config)
+        .then(response => {return {data: response.data}})
         .catch(error => handleError(error, url));
 }
 
