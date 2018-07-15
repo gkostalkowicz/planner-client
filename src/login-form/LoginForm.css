@@ -1,0 +1,12 @@
+#login-form input[type=submit] {
+    width: 6em;
+}
+
+#login-form input#username {
+    width: 11em;
+}
+
+#login-form .error-message {
+    color: red;
+    font-weight: bold;
+}
