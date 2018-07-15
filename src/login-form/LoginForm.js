@@ -30,7 +30,7 @@ export default class LoginForm extends Component {
         }
 
         this.setState({errorMessage: ""});
-        this.props.onSubmit(username);
+        this.props.onLogIn(username);
     }
 
     render() {

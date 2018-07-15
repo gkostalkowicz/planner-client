@@ -3,9 +3,9 @@ import Calendar from "../calendar/Calendar";
 import {YearMonth} from "js-joda";
 import {MONTH_NAMES} from "../common/date";
 import eventService from "../common/EventService";
-import UpcomingEvents from "../event-list/UpcomingEvents";
-import "./CalendarPane.css";
 import EventsOnDay from "../event-list/EventsOnDay";
+import authService from "../common/AuthService";
+import "./CalendarPane.css";
 
 export default class CalendarPane extends Component {
 
@@ -18,12 +18,17 @@ export default class CalendarPane extends Component {
         this.handlePreviousMonth = this.handlePreviousMonth.bind(this);
         this.handleNextMonth = this.handleNextMonth.bind(this);
         this.handleSelectDay = this.handleSelectDay.bind(this);
+        this.handleLogOut = this.handleLogOut.bind(this);
     }
 
     render() {
         const yearMonth = this.state.yearMonth;
         return <div>
-            <div className="add-event-link"><a href="#" onClick={this.props.onAddEvent}>⊕ New event</a></div>
+            <nav>
+                <div className="user-info">Welcome <strong>{authService.getUsername()}</strong>.{' '}
+                    <a href="#" onClick={this.handleLogOut}>Log out.</a></div>
+                <div className="new-event"><a href="#" onClick={this.props.onAddEvent}>⊕ New event</a></div>
+            </nav>
 
             <h2>{MONTH_NAMES[yearMonth.monthValue() - 1] + ' ' + yearMonth.year()}</h2>
             <div className="month-chooser">
@@ -55,5 +60,10 @@ export default class CalendarPane extends Component {
 
     handleSelectDay(day) {
         this.setState({selectedDay: day});
+    }
+
+    handleLogOut() {
+        authService.logOut();
+        this.props.onLogOut();
     }
 }

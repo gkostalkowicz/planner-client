@@ -53,7 +53,8 @@ export default class DashboardScreen extends Component {
                     onSelectEvent={this.handleDisplayEventDetails}/>
                 <div id="main-page">
                     <CalendarPane onAddEvent={this.handleDisplayAddEventForm}
-                                  onSelectEvent={this.handleDisplayEventDetails}/>
+                                  onSelectEvent={this.handleDisplayEventDetails}
+                                  onLogOut={this.props.onLogOut}/>
                 </div>
                 {this.state.windowContent
                 && <Window content={this.state.windowContent} onClose={this.closeWindow}/>}

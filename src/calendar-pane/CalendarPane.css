@@ -1,7 +1,10 @@
-.add-event-link {
+nav {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+nav .new-event {
     font-size: 1em;
     font-weight: bold;
     text-transform: uppercase;
