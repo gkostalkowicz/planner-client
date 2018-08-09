@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authService from '../auth/AuthService';
 
-const baseUrl = 'http://localhost:3030';
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export function get(url) {
     return sendRequest('get', url);
