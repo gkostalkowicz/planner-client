@@ -2,10 +2,6 @@
 
 This repository contains client of the Planner application. Server repository is available under https://github.com/gkostalkowicz/planner-server.
 
-## See it in action
-
-Application is available under https://planner-react.herokuapp.com/.
-
 ## Starting local development
 
 To set up local development environment and start the application:
